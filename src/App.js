@@ -3,7 +3,7 @@ import "./App.css";
 import AddBookmark from "./component/addBookmark/AddBookmark";
 import BookmarkApp from "./component/bookmarkApp/bookmarkApp";
 
-class App extends Component() {
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
