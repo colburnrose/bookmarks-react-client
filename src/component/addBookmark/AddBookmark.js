@@ -105,16 +105,18 @@ class AddBookmark extends Component {
             value={this.state.description}
             onChange={(e) => this.descriptionChanged(e.target.value)}
           />
-          <label htmlFor="rating">Rating: </label>
-          <input
-            type="number"
-            name="rating"
-            id="rating"
-            min="1"
-            max="5"
-            value={this.state.rating}
-            onChange={(e) => this.ratingChanged(e.target.value)}
-          />
+          <label htmlFor="rating">
+            Rating:
+            <input
+              type="number"
+              name="rating"
+              id="rating"
+              min="1"
+              max="5"
+              value={this.state.rating}
+              onChange={(e) => this.ratingChanged(e.target.value)}
+            />
+          </label>
 
           <div className="addbookmark__buttons">
             <button onClick={(e) => this.props.showForm(false)}>Cancel</button>

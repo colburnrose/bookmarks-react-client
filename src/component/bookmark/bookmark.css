@@ -1,0 +1,19 @@
+.bookmark {
+  padding: 5px;
+  list-style: none;
+  border-top: solid 1px rgba(0, 0, 0, 0.2);
+}
+
+.bookmark__row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bookmark__title {
+  text-align: center;
+}
+
+.bookmark__description {
+  text-align: left;
+  font-size: 0.95em;
+}

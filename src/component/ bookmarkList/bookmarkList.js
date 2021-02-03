@@ -9,7 +9,7 @@ class BookmarkList extends Component {
     const bookmarks = this.props.bookmarks.map((bookmark, i) => (
       <Bookmark {...bookmark} key={i} />
     ));
-    return <div className="bookmarkList">{bookmarks}</div>;
+    return <div className="BookmarkList">{bookmarks}</div>;
   }
 }
 

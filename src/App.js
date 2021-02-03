@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
+import config from "./config";
 import AddBookmark from "./component/addBookmark/AddBookmark";
 import BookmarkApp from "./component/bookmarkApp/bookmarkApp";
 
@@ -26,18 +27,16 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const url = "https://tf-ed-bookmarks-api.herokuapp.com/v3/bookmarks";
     const options = {
       method: "GET",
       headers: {
         // Add your key after Bearer
-        Authorization:
-          "Bearer $2a$10$OciRSG5.DoeVO2yQ3EwWWuzr/o5uz6o2GWImIRgchaamtzybt3tlq$2a$10$k6jCwK6mr7PJaJmZGyBCoeIq2thlnV4r7GQM1zZw5oVQNCDZcla3K",
+        Authorization: `Bearer ${config.API_KEY}`,
         "Content-Type": "application/json",
       },
     };
 
-    fetch(url, options)
+    fetch(config.API_ENDPOINT, options)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Something went wrong, please try again later.");
