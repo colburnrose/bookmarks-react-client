@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Route } from "react-router-dom";
 import "./App.css";
 import config from "./config";
 import AddBookmark from "./component/addBookmark/AddBookmark";
@@ -58,14 +59,25 @@ class App extends Component {
   }
   render() {
     const page = this.state.showAddForm ? (
-      <AddBookmark
-        showForm={(show) => this.setShowAddForm(show)}
-        handleAdd={(bookmark) => this.addBookmark(bookmark)}
+      <Route
+        path="/add-bookmark"
+        render={() => (
+          <AddBookmark
+            showForm={(show) => this.setShowAddForm(show)}
+            handleAdd={(bookmark) => this.addBookmark(bookmark)}
+          />
+        )}
       />
     ) : (
-      <BookmarkApp
-        bookmarks={this.state.bookmarks}
-        showForm={(show) => this.setShowAddForm(show)}
+      <Route
+        exact
+        path="/"
+        render={() => (
+          <BookmarkApp
+            bookmarks={this.state.bookmarks}
+            showForm={(show) => this.setShowAddForm(show)}
+          />
+        )}
       />
     );
     return <div className="App">{page}</div>;
