@@ -42,6 +42,7 @@ class App extends Component {
     );
     this.setState({
       bookmarks: newBookMarks,
+      showAddForm: false,
     });
   };
 
@@ -75,35 +76,50 @@ class App extends Component {
         });
       });
   }
+
+  updateBookmark = (updatedBookmark) => {
+    this.setState({
+      bookmarks: this.state.bookmarks.map((bm) =>
+        bm.id !== updatedBookmark.id ? bm : updatedBookmark
+      ),
+      showAddForm: false,
+    });
+  };
+
   render() {
     const contextValue = {
-      bokomarks: this.state.bookmarks,
+      bookmarks: this.state.bookmarks,
       addBookmark: this.addBookmark,
       deleteBookmark: this.deleteBookmark,
+      updatedBookmark: this.updateBookmark,
     };
 
     const page = "";
     <main className="App">
-      <Route
-        path="/add-bookmark"
-        render={() => (
-          <AddBookmark
-            showForm={(show) => this.setShowAddForm(show)}
-            handleAdd={(bookmark) => this.addBookmark(bookmark)}
+      <BookmarksContext.Provider value={contextValue}>
+        <div className="content" aria-live="polite">
+          <Route
+            path="/add-bookmark"
+            render={() => (
+              <AddBookmark
+                showForm={(show) => this.setShowAddForm(show)}
+                handleAdd={(bookmark) => this.addBookmark(bookmark)}
+              />
+            )}
           />
-        )}
-      />
-      <Route
-        exact
-        path="/"
-        render={() => (
-          <BookmarkApp
-            bookmarks={this.state.bookmarks}
-            showForm={(show) => this.setShowAddForm(show)}
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <BookmarkApp
+                bookmarks={this.state.bookmarks}
+                showForm={(show) => this.setShowAddForm(show)}
+              />
+            )}
           />
-        )}
-      />
-      <Route path="/edit/:bookmarkId" component={EditBookmark} />
+          <Route path="/edit/:bookmarkId" component={EditBookmark} />
+        </div>
+      </BookmarksContext.Provider>
     </main>;
     return <div className="App">{page}</div>;
   }
