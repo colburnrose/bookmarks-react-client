@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./AddBookmark.css";
+import BookmarksContext from "../../BookmarksContext";
 
 class AddBookmark extends Component {
   constructor(props) {
@@ -11,6 +12,8 @@ class AddBookmark extends Component {
       rating: 1,
     };
   }
+
+  static contextType = BookmarksContext;
 
   titleChanged(title) {
     this.setState({
@@ -65,7 +68,9 @@ class AddBookmark extends Component {
           description: "",
           rating: 1,
         });
-        this.props.handleAdd(bookmark);
+        // this.props.handleAdd(bookmark);
+        this.context.addBookmark(data);
+        this.props.history.push("/");
       })
       .catch((err) => {
         this.setState({
@@ -73,6 +78,10 @@ class AddBookmark extends Component {
         });
       });
   }
+
+  handleClickCancel = () => {
+    this.props.history.push("/");
+  };
 
   render() {
     return (
@@ -121,6 +130,9 @@ class AddBookmark extends Component {
           <div className="addbookmark__buttons">
             <button onClick={(e) => this.props.showForm(false)}>Cancel</button>
             <button type="submit">Save</button>
+            <button type="button" onClick={this.handleClickCancel}>
+              Cancel
+            </button>
           </div>
         </form>
       </div>

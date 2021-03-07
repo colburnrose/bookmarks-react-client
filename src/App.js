@@ -4,6 +4,8 @@ import "./App.css";
 import config from "./config";
 import AddBookmark from "./component/addBookmark/AddBookmark";
 import BookmarkApp from "./component/bookmarkApp/bookmarkApp";
+import BookmarksContext from "./BookmarksContext";
+import EditBookmark from "../src/component/EditBookmark/EditBookmark";
 
 class App extends Component {
   constructor(props) {
@@ -13,6 +15,13 @@ class App extends Component {
       showAddForm: false,
     };
   }
+
+  setBookmarks = (bookmarks) => {
+    this.setState({
+      bookmarks,
+      showAddForm: false,
+    });
+  };
 
   setShowAddForm(show) {
     this.setState({
@@ -27,13 +36,22 @@ class App extends Component {
     });
   }
 
+  deleteBookmark = (bookmarkId) => {
+    const newBookMarks = this.state.bookmarks.filter(
+      (bm) => bm.bookmarkId !== bookmarkId
+    );
+    this.setState({
+      bookmarks: newBookMarks,
+    });
+  };
+
   componentDidMount() {
     const options = {
       method: "GET",
       headers: {
         // Add your key after Bearer
-        Authorization: `Bearer ${config.API_KEY}`,
         "Content-Type": "application/json",
+        Authorization: `Bearer ${config.API_KEY}`,
       },
     };
 
@@ -42,7 +60,7 @@ class App extends Component {
         if (!res.ok) {
           throw new Error("Something went wrong, please try again later.");
         }
-        return res;
+        return res.json();
       })
       .then((res) => res.json())
       .then((data) => {
@@ -58,7 +76,14 @@ class App extends Component {
       });
   }
   render() {
-    const page = this.state.showAddForm ? (
+    const contextValue = {
+      bokomarks: this.state.bookmarks,
+      addBookmark: this.addBookmark,
+      deleteBookmark: this.deleteBookmark,
+    };
+
+    const page = "";
+    <main className="App">
       <Route
         path="/add-bookmark"
         render={() => (
@@ -68,7 +93,6 @@ class App extends Component {
           />
         )}
       />
-    ) : (
       <Route
         exact
         path="/"
@@ -79,7 +103,8 @@ class App extends Component {
           />
         )}
       />
-    );
+      <Route path="/edit/:bookmarkId" component={EditBookmark} />
+    </main>;
     return <div className="App">{page}</div>;
   }
 }
